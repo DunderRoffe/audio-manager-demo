@@ -1,0 +1,78 @@
+GENIVI_AudioManager_PoC
+===============================================
+:Author: Adrian Scarlat <adrian.scarlat@windriver.com>
+:doctitle: GENIVI_AudioManager_PoC
+
+SPDX license identifier: CC-BY-SA-4.0
+
+Copyright (C) 2011-2014, Wind River Systems
+Copyright (C) 2014, GENIVI Alliance
+
+This file is part of AudioManager PoC.
+
+This Documentation Form is subject to the terms of the Creative
+Commons Attribution Share Alike  (CC-BY-SA), v. 4.0. If a copy
+of the CC-BY-SA was not distributed with this file, you can
+obtain one at http://spdx.org/licenses/CC-BY-SA-4.0
+
+For further information see http://www.genivi.org/.
+
+== Description of AudioManager_PoC
+The AudioManager Proof of Concept (AM PoC) is an Qt application, based
+on Qt5 and QtQuick module. It uses the GENIVI AudioManager capabilities
+to demonstrate how audio sources are managed based on  mixing rules
+that are defined in the configuration file for AM Control Plugin:
+"libPluginControlInterface.conf".
+
+For a detailed description please consult the "libPluginControlInterface.conf",
+"libPluginRoutingInterfacePulse.conf" and AudioManager documentation.
+
+Also please visit the following link:
+http://wiki.projects.genivi.org/index.php/Intrepid_-_Yocto_GENIVI_Demo_Platform
+for a description of the GENIVI Demo Platform into which the AM PoC is
+pre-integrated.
+
+== How to add wav files to AudioManager PoC
+Currently Am PoC uses aplay to play wav files using scripts. The audio wav files
+are found in AudioManagerPoC/resources/audio/ and the scripts used are found
+in AudioManagerPoC/resources/scripts.
+
+Below is a description of which script plays what wav file:
+
+   Script name     ||  Wav file played
+===================||=====================
+playCarReverse.sh  ||  car_reverse.wav
+------------------------------------------
+   playnav.sh      ||  navigation.wav
+------------------------------------------
+   playtel.sh      ||  telephone-ring.wav
+------------------------------------------
+   playtts.sh      ||  tts.wav
+------------------------------------------
+
+To change the wav files played, the following steps must be taken:
+1. Edit the script corresponding to the file you want to change by
+   changing the aplay file name parameter with the wav file name you
+   want to use;
+2. Edit the AudioManager_PoC.pro file by changing the corresponding
+   wav file name in the files member of the audio install set; This
+   ensures that the new audio wav file will be installed when deploying;
+
+There is one script: playmusic.sh, for which the audio wav file is not provided
+because of copyright issues.
+To add a wav file for the playmusic.sh script do the following:
+1. Edit the playmusic.sh script by changing the aplay file name parameter with
+   the wav file name you want to use;
+2. Edit the AudioManager_PoC.pro file by adding the corresponding
+   wav file name in the files member of the audio install set; This
+   ensures that the new audio wav file will be installed when deploying;
+
+IMPORTANT !!
+To stop playing the audio files, scripts are also used and can be found in
+AudioManagerPoC/resources/scripts. Be sure that the grep parameter used to
+search for the process that plays the audio file, corresponds to the wav file
+name being played.
+
+Example:
+For the stopmusic.sh script, change "grep [U]NKLE" to "grep [y]our_wav_file.wav".
+Do this for all the scripts that start with 'stop';
